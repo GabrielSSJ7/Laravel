@@ -5,7 +5,9 @@
     <div class="col-md-4">
         <div class="panel panel-info ">
             <div class="panel-heading">
-                <p style="color:#444">{{$pessoa->nome}}</p>
+                <p style="color:#444">{{$pessoa->nome}}<a style="float: right;" class="btn btn-primary" href="{{url("/pessoas/$pessoa->id/edit")}}"><i class="glyphicon glyphicon-pencil"></i></a></p>
+                
+                
             </div>
             <div class="panel-body">
                 @foreach($pessoa->telefones as $telefone)
