@@ -7,6 +7,7 @@ use App\Pessoa;
 use App\Telefone;
 use \Illuminate\Support\Facades\DB;
 
+
 class PessoasController extends Controller {
 
     private $telefones_controller;
@@ -41,6 +42,30 @@ class PessoasController extends Controller {
 
     public function editView($id) {
         return view("pessoas.edit", ["pessoa"=> $this->getPessoa($id)]);
+    }
+    
+    public function updateData(Request $request){
+
+        $rules = [
+            'nome' => 'required|max:13',
+            'ddd' => 'required|min:2|max:3',
+            'telefone' => 'required|max:10|min:9'
+        ];
+        
+        $customMessages = [
+            'required' => 'O campo :attribute é necessário',
+            'max'=> 'O campo :attribute não pode ter mais que :max letras ',
+            'min'=> 'O campo :attribute não pode ter menos que :min letras '
+        ];
+        
+        $this->validate($request, $rules, $customMessages);
+
+       $_pessoa = Pessoa::find($request->id);
+       $_pessoa->nome = $request->nome;
+       $_pessoa->save();
+
+       $_telefone = Telefone::where('pessoa_id', $request->id)->update(['ddd' => $request->ddd, 'telefone' => $request->telefone]);
+       return redirect('/pessoas');
     }
     
     protected function getPessoa($id){
