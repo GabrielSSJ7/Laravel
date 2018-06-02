@@ -27,6 +27,10 @@ class PessoasController extends Controller {
         return view('pessoas.create');
     }
 
+    public function editView($id) {
+        return view("pessoas.edit", ["pessoa"=> $this->getPessoa($id)]);
+    }
+
     public function store(Request $request) {
 
         $pessoa = \App\Pessoa::create($request->all());
@@ -38,10 +42,6 @@ class PessoasController extends Controller {
             $this->telefones_controller->store($telefone);
         }
         return redirect("/pessoas")->with("message", "Pessoa criada com sucesso!");
-    }
-
-    public function editView($id) {
-        return view("pessoas.edit", ["pessoa"=> $this->getPessoa($id)]);
     }
     
     public function updateData(Request $request){
@@ -66,6 +66,16 @@ class PessoasController extends Controller {
 
        $_telefone = Telefone::where('pessoa_id', $request->id)->update(['ddd' => $request->ddd, 'telefone' => $request->telefone]);
        return redirect('/pessoas');
+    }
+
+    public function deleteData($id){
+        
+        if(Pessoa::where('id', '=' , $id)->delete() != 0){
+            return redirect("/pessoas");
+        }
+
+        
+        
     }
     
     protected function getPessoa($id){

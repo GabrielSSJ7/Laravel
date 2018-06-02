@@ -16,6 +16,7 @@ Route::group(['prefix'=>'pessoas'], function(){
     Route::get("/novo", "PessoasController@novoView");
     Route::post("/store", "PessoasController@store");
     Route::post("/edit", "PessoasController@updateData");
+    Route::get("/{id}/delete", "PessoasController@deleteData");
     Route::get("/{id}/edit", "PessoasController@editView");
     Route::get("/","PessoasController@index");
 });

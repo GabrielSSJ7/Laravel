@@ -15,8 +15,10 @@
     @endif-->
     <form class="col-md-12" action="{{url("/pessoas/edit")}}" method="post">
         {{csrf_field()}}
+       
         <input style="display: none" value="{{$pessoa->pessoa_id}}" name="id">
         <div class="form-group col-md-12 {{ $errors->has('nome') ? ' has-error' : '' }}">
+        
             <label for="nome" class="control-label"></label>
             <input type="text" name="nome" value="{{$pessoa->nome}}" placeholder="Nome" class="form-control" />
              <small class="text-danger">{{ $errors->first('nome') }}</small>
@@ -33,6 +35,8 @@
             <small class="text-danger">{{ $errors->first('telefone') }}</small>
         </div>
         <div class="col-md-12">
+        <a style="float:left; margin-bottom: 5px" class="btn btn-danger glyphicon glyphicon-trash"
+         href="{{url("/pessoas/$pessoa->pessoa_id/delete")}}"></a>
             <button style="float: right" class="btn btn-primary">Salvar</button>
         </div>
 
